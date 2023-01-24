@@ -1,46 +1,25 @@
 fn main() {
-    part1();
-    part2();
+    let input = include_str!("my_input.txt");
+    println!("Part 1 (top elf): {}", process_elves(input, 1));
+    println!("Part 2 (sum of 3 top elves): {}", process_elves(input, 3));
 }
 
-fn part1() {
-    let contents = include_str!("my_input.txt");
+fn process_elves(input: &str, top_n: usize) ->u32 {
+    let mut elf_sum = 0; // Sum of calories for current elf
+    let mut top_elves = vec![0; top_n]; // Calories for the top `top_n` elves
 
-    let mut elf_sum = 0;
-    let mut max_sum = 0;
-    for line in contents.lines() {
-        match line.parse::<i32>() {
-            Ok(n) => {
-                elf_sum += n;
-            },
-            Err(_) => { // The only error we expect is a blank line
-                if elf_sum > max_sum {
-                    max_sum = elf_sum;
-                }
-                elf_sum = 0;
-            }
-        }
-    }
-    println!("{}", max_sum);
-}
-
-fn part2() {
-    let contents = include_str!("my_input.txt");
-
-    let mut elf_sum = 0;
-    let mut max_three = vec![0, 0, 0];
-    for line in contents.lines() {
-        match line.parse::<i32>() {
+    for line in input.lines() {
+        match line.parse::<u32>() {
             Ok(n) => {
                 elf_sum += n;
             },
             Err(_) => { // Assume blank line and finish processing this elf
-                max_three.push(elf_sum);
-                max_three.sort();
-                max_three = (&max_three[1..4]).to_vec();
+                top_elves.push(elf_sum);
+                top_elves.sort();
+                top_elves = (top_elves[1..(top_n+1)]).to_vec();
                 elf_sum = 0;
             }
         }
     }
-    println!("{}", max_three.iter().sum::<i32>());
+    return top_elves.iter().sum();
 }
