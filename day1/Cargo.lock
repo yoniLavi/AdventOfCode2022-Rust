@@ -5,3 +5,12 @@ version = 3
 [[package]]
 name = "day1"
 version = "0.1.0"
+dependencies = [
+ "fixed_heap",
+]
+
+[[package]]
+name = "fixed_heap"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "498da729e748e16d51af97326d8560618d3a93d35ac14d8f3c3bb3b00f161488"
